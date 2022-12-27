@@ -1,4 +1,5 @@
 #include<iostream>
+#include<queue>
 using namespace std;
 
 
@@ -14,8 +15,7 @@ class nodex
         this->right=NULL;
     }
 };
-
-nodex* buildtree(nodex* root)
+nodex* buildtree(nodex* &root)
 {   int a;
     cout<<"Enter value:"<<endl;
     cin>>a;
@@ -30,16 +30,31 @@ nodex* buildtree(nodex* root)
      return root;
     }
 }
+void printtree(nodex* tree)
+{
+  queue<nodex*> q;
+  q.push(tree);
+  while(!q.empty())
+  {
+    nodex* temp=q.front();
+    cout<<temp->data;
+    q.pop();
+    if(q.front()==NULL)
+    cout<<endl;
+    if(temp->left)
+    q.push(temp->left);
+    if(temp->right)
+    q.push(temp->right);
 
-void displaytree(nodex* root)
-{   cout<<"abc";
-    nodex p=*root;
-    cout<<p.data;
-       
+  }
 }
+
+
 int main()
 {   nodex* tree=NULL;
     buildtree(tree);
-    displaytree(tree);
+   // levelordertraverse(tree);
+   printtree(tree);
     return 0;
 }           
+
