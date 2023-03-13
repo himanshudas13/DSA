@@ -1,0 +1,158 @@
+#include<iostream>
+using namespace std;
+
+//MAX HEAP
+
+void heapify(int arr[100],int i)
+{  
+      int fcs=i;
+      if(arr[i]<arr[2*i] || arr[i]<arr[2*i+1])
+      {  int k=arr[i];
+         arr[i]=(arr[2*i]>arr[2*i+1])?arr[2*i]:arr[2*i+1];
+         i=(arr[2*i]>arr[2*i+1])?2*i:2*i+1;
+         arr[i]=k;
+      }
+      if(fcs!=i)
+       heapify(arr,i);
+}
+
+void heapify2(int arr[100],int i,int size)
+{  
+      int fcs=i;
+      if(arr[i]<arr[2*i] || arr[i]<arr[2*i+1])
+      {  int k=arr[i];
+         arr[i]=(arr[2*i]>arr[2*i+1])?arr[2*i]:arr[2*i+1];
+         i=(arr[2*i]>arr[2*i+1])?2*i:2*i+1;
+         arr[i]=k;
+      }
+      if(fcs!=i && 2*i+1<size)
+       heapify2(arr,i,size);
+}
+
+
+void propagate(int arr[100],int last)
+{  int i=1;
+   while(i<last)
+   { 
+      if(arr[i]<arr[2*i] || arr[i]<arr[2*i+1])
+      {  int k=arr[i];
+         arr[i]=(arr[2*i]>arr[2*i+1])?arr[2*i]:arr[2*i+1];
+         i=(arr[2*i]>arr[2*i+1])?2*i:2*i+1;
+         arr[i]=k;
+      }
+      else 
+       return;
+
+   }
+
+}
+void swap(int i,int j,int arr[100])
+{  
+   int k= arr[i];
+   arr[i]=arr[j];
+   arr[j]=k;
+}
+void rearrange(int arr[100],int last)
+{  int i=last;
+   while(i>1)
+   {
+    if (arr[i]>arr[i/2])
+   { swap(i,i/2,arr);
+    i=i/2;}
+    else
+     return;
+   }
+}
+
+ 
+class heap
+{ public:
+
+   int arr[100];
+   int last=1;
+
+   void insert(int a)
+   {
+    arr[last]=a;
+    rearrange(arr,last);
+    
+   }
+
+   void insertran(int a)
+   {
+      arr[last]=a;
+      last++;
+   }
+
+   void deletenode()
+   {
+      arr[1]=arr[--last];
+      arr[last]=0;
+      propagate(arr,last);
+ 
+   }
+
+   void print_heap()
+   {
+    for(int i=1;i<last;i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+   }
+   
+   void createheap()
+   {  
+      for(int i=(last-1)/2+1;i>=1;i--)
+      {
+         heapify2(arr,i,last-1);
+      }
+        print_heap();
+        cout<<endl;
+   }
+
+   void heapsort(int n)
+   {
+
+      
+      swap(1,n,arr);
+      heapify2(arr,1,--n);
+      print_heap();
+      cout<<endl;
+       if(n==3)
+    {  swap(1,n,arr);
+      if(arr[2]<arr[1])
+      swap(1,2,arr);
+      return;
+    }
+      heapsort(n);
+
+   
+
+     } 
+     
+     
+
+   
+}s1;
+
+int main()
+{ 
+   int arx[7]={67,56,39,72,14,81,7};
+   for(int i=0;i<7;i++)
+   {
+      s1.insertran(arx[i]);
+   }
+   //s1.print_heap();
+   cout<<endl;
+   //s1.deletenode();
+   
+   s1.createheap();
+   
+   s1.heapsort(7);
+   cout<<endl;
+   s1.print_heap();
+   
+    return 0;
+}
+
+
